@@ -1,6 +1,19 @@
 <template>
 	<div class="Subreddit">
 		<a :href="makeurl(item.data.permalink)" :style="makeImage(item.data.thumbnail)" target="_blank" class="thumbnail"></a>
+		<div class="details">
+			<a :href="makeurl(item.data.permalink)" :title="item.data.title" target="_blank" class="title">
+				{{item.data.title |truncate}}
+			</a>
+			<br />
+			<div class="stats">
+				<i class="material-icons">thumbs_up_down</i>
+				{{item.data.score}}
+				<i class="material-icons">forum</i>
+				{{item.data.num_comments}}
+				
+			</div>
+		</div>
 	</div>
 
 </template>
@@ -17,12 +30,23 @@
 			makeurl : function(permalink) {
 				return 'http://reddit.com/'+permalink;
 				// body...
+			},
+			filter: {
+				truncate: function(value){
+					var length =50;
+					if(value.length<=length){
+						return value;
+					}
+					else{
+						return value.substring(0,length)+'... '
+					}
+				}
 			}
 		}
 	}
 </script>
 <style scoped>
-	.subreddit{
+	.Subreddit{
 		display: flex;
 	}
 	.thumbnail{
@@ -35,5 +59,23 @@
 		margin-right: 12px;
 		border-radius: 5px;
 
+	}
+	.subreddit .details .title{
+		font-size: 15px;
+		margin-bottom: 5px;
+		color: steelblue;
+
+	}
+	.subreddit .stats{
+		font-size: 12px;
+		margin-right: 4px;
+		margin-top: 7px;
+		display: inline-block;
+		color: #666666;
+
+	}
+	.subreddit .stats{
+		font-size: 10px;
+		margin-right: 2px;
 	}
 	</style>
